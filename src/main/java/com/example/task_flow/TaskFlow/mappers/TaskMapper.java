@@ -30,11 +30,11 @@ public class TaskMapper {
     }
 
     public void update(Task task, TaskRequestDto dto) {
-        task.setName(task.getName());
-        task.setIsCompleted(task.getIsCompleted());
-        task.setDate(task.getDate());
-        task.setPriority(task.getPriority());
-        task.setStatus(task.getStatus());
+        task.setName(dto.getName());
+        task.setIsCompleted(dto.getIsCompleted());
+        task.setDate(dto.getDate());
+        task.setPriority(dto.getPriority());
+        task.setStatus(dto.getStatus());
     }
 
 }
