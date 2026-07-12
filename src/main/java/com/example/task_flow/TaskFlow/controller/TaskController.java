@@ -33,13 +33,13 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newTask);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<TaskResponseDto> update(@PathVariable Long id, @RequestBody @Valid TaskRequestDto dto) {
         TaskResponseDto task = this.taskService.updateTask(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(task);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         this.taskService.deleteTask(id);
         return ResponseEntity.status(HttpStatus.OK).body("Removed task ID: " + id);

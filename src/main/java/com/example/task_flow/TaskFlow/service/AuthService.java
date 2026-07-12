@@ -5,6 +5,7 @@ import com.example.task_flow.TaskFlow.entity.user.request.RegisterRequestDto;
 import com.example.task_flow.TaskFlow.entity.user.response.RegisterResponseDto;
 import com.example.task_flow.TaskFlow.mappers.AuthMapper;
 import com.example.task_flow.TaskFlow.repository.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,8 +28,18 @@ public class AuthService implements UserDetailsService {
     }
 
     public RegisterResponseDto registerUser(RegisterRequestDto dto) {
+        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new RuntimeException("User with email exists");
+        }
+
         User user = this.authMapper.requestToUser(dto);
-        this.userRepository.save(user);
+
+        try {
+            this.userRepository.save(user);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("User with email exists");
+        }
+
         return this.authMapper.userToResponse(user);
     }
 }
