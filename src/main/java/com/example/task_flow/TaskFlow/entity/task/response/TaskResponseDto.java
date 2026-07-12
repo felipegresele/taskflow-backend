@@ -19,9 +19,7 @@ public class TaskResponseDto {
     private String name;
     private Boolean isCompleted = false;
     private Date date;
-    @Enumerated(EnumType.STRING)
     private PriorityEnum priority;
-    @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
 }

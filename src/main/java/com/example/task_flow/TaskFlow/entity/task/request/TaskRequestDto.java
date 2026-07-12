@@ -23,9 +23,7 @@ public class TaskRequestDto {
     private Boolean isCompleted = false;
     @NotNull
     private Date date;
-    @Enumerated(EnumType.STRING)
     private PriorityEnum priority;
-    @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
 }
