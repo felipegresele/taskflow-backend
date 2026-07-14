@@ -1,14 +1,18 @@
 package com.example.task_flow.TaskFlow.mappers;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.task_flow.TaskFlow.entity.task.Task;
 import com.example.task_flow.TaskFlow.entity.task.request.TaskRequestDto;
 import com.example.task_flow.TaskFlow.entity.task.response.TaskResponseDto;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TaskMapper {
 
     public Task requestToEntity(TaskRequestDto dto) {
+
         Task newTask = new Task();
         newTask.setName(dto.getName());
         newTask.setIsCompleted(dto.getIsCompleted());
@@ -35,6 +39,12 @@ public class TaskMapper {
         task.setDate(dto.getDate());
         task.setPriority(dto.getPriority());
         task.setStatus(dto.getStatus());
+    }
+
+    public List<TaskResponseDto> entityListToResponseList(List<Task> tasks) {
+        return tasks.stream()
+                .map(this::entityToResponse)
+                .toList();
     }
 
 }

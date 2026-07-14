@@ -1,7 +1,9 @@
 package com.example.task_flow.TaskFlow.entity.task;
 
+import com.example.task_flow.TaskFlow.entity.user.User;
 import com.example.task_flow.TaskFlow.enums.PriorityEnum;
 import com.example.task_flow.TaskFlow.enums.StatusEnum;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,5 +29,10 @@ public class Task {
     private PriorityEnum priority;
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("tasks")
+    private User user;
 
 }

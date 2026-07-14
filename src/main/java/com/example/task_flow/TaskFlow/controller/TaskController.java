@@ -1,5 +1,6 @@
 package com.example.task_flow.TaskFlow.controller;
 
+import com.example.task_flow.TaskFlow.config.JwtUserData;
 import com.example.task_flow.TaskFlow.entity.task.Task;
 import com.example.task_flow.TaskFlow.entity.task.request.TaskRequestDto;
 import com.example.task_flow.TaskFlow.entity.task.response.TaskResponseDto;
@@ -7,6 +8,7 @@ import com.example.task_flow.TaskFlow.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,14 +24,14 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Task>> getAll() {
-        List<Task> list = this.taskService.getAllTasks();
+    public ResponseEntity<List<TaskResponseDto>> getAll(@AuthenticationPrincipal JwtUserData jwtUser) {
+        List<TaskResponseDto> list = this.taskService.getAllTasks(jwtUser.getId());
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
     @PostMapping
-    public ResponseEntity<TaskResponseDto> addTask(@RequestBody @Valid TaskRequestDto dto) {
-        TaskResponseDto newTask = this.taskService.addTask(dto);
+    public ResponseEntity<TaskResponseDto> addTask(@RequestBody @Valid TaskRequestDto dto, @AuthenticationPrincipal JwtUserData jwtUser) {
+        TaskResponseDto newTask = this.taskService.addTask(dto, jwtUser.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(newTask);
     }
 

@@ -1,5 +1,6 @@
 package com.example.task_flow.TaskFlow.entity.user;
 
+import com.example.task_flow.TaskFlow.entity.task.Task;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,8 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
