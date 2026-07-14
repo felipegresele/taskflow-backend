@@ -24,8 +24,13 @@ public class TaskService {
         this.userRepository = userRepository;
     }
 
-    public List<TaskResponseDto> getAllTasks(Long userId) {
+    public List<TaskResponseDto> getAllTasks(String taskName, Long userId) {
         List<Task> list = this.taskRepository.findByUserId(userId);
+        if (taskName != null && !taskName.isBlank()) {
+            list = list.stream()
+                    .filter(task -> task.getName().equalsIgnoreCase(taskName))
+                    .toList();
+        }
         return this.taskMapper.entityListToResponseList(list);
     }
 

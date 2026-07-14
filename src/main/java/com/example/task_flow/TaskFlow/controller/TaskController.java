@@ -24,8 +24,8 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskResponseDto>> getAll(@AuthenticationPrincipal JwtUserData jwtUser) {
-        List<TaskResponseDto> list = this.taskService.getAllTasks(jwtUser.getId());
+    public ResponseEntity<List<TaskResponseDto>> getAll(@RequestParam(name = "name", required = false) String taskName, @AuthenticationPrincipal JwtUserData jwtUser) {
+        List<TaskResponseDto> list = this.taskService.getAllTasks(taskName, jwtUser.getId());
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
